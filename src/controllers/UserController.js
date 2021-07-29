@@ -17,6 +17,21 @@ class UserController {
       });
     }
   }
+
+  async index(request, response) {
+    try {
+      const users = await User.findAll();
+      return response.json(users);
+    } catch (e) {
+      return response.json(null);
+    }
+  }
+
+  async show(request, response) {
+    const { id } = request.params;
+    const user = await User.findByPk(id);
+    return response.json(user);
+  }
 }
 
 export default new UserController();
