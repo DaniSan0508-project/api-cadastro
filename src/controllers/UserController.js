@@ -32,6 +32,29 @@ class UserController {
     const user = await User.findByPk(id);
     return response.json(user);
   }
+
+  async update(request, response) {
+    try {
+      if (!request.params.id) {
+        return response.status(400).json({
+          errors: ['ID não enviado !'],
+        });
+      }
+
+      const user = User.findByPk(request.params.id);
+
+      if (!user) {
+        return response.status(400).json({
+          errors: ['Usuário não existe!'],
+        });
+      }
+
+      const novosDados = User.update(request.body);
+      return response.json(novosDados);
+    } catch (e) {
+      return response.json(null);
+    }
+  }
 }
 
 export default new UserController();
