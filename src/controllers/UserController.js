@@ -59,6 +59,24 @@ class UserController {
       });
     }
   }
+
+  async delete(request, response) {
+    try {
+      const { id } = request.params;
+      if (!id) {
+        return response.status(400).json({
+          errors: ['missing id'],
+        });
+      }
+
+      const user = await User.findByPk(id);
+
+      await user.destroy();
+      return response.json({ msg: 'User deleted' });
+    } catch (e) {
+      return e.errors.map((err) => err.message);
+    }
+  }
 }
 
 export default new UserController();
