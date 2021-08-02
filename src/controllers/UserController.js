@@ -34,26 +34,24 @@ class UserController {
   }
 
   async update(request, response) {
-    try {
-      if (!request.params.id) {
-        return response.status(400).json({
-          errors: ['ID não enviado !'],
-        });
-      }
-
-      const user = User.findByPk(request.params.id);
-
-      if (!user) {
-        return response.status(400).json({
-          errors: ['Usuário não existe!'],
-        });
-      }
-
-      const novosDados = User.update(request.body);
-      return response.json(novosDados);
-    } catch (e) {
-      return response.json(null);
+    const { id } = request.params;
+    if (!id) {
+      return response.status(400).json({
+        errors: [
+          'missing id',
+        ],
+      });
     }
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return response.status(400).json({
+        errors: 'User not exists',
+      });
+    }
+    const newUser = await user.update(request.body);
+    return response.json(newUser);
   }
 }
 
