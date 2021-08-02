@@ -34,24 +34,30 @@ class UserController {
   }
 
   async update(request, response) {
-    const { id } = request.params;
-    if (!id) {
+    try {
+      const { id } = request.params;
+      if (!id) {
+        return response.status(400).json({
+          errors: [
+            'missing id',
+          ],
+        });
+      }
+
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        return response.status(400).json({
+          errors: 'User not exists',
+        });
+      }
+      const newUser = await user.update(request.body);
+      return response.json(newUser);
+    } catch (e) {
       return response.status(400).json({
-        errors: [
-          'missing id',
-        ],
+        errors: e.errors.map((err) => err.message),
       });
     }
-
-    const user = await User.findByPk(id);
-
-    if (!user) {
-      return response.status(400).json({
-        errors: 'User not exists',
-      });
-    }
-    const newUser = await user.update(request.body);
-    return response.json(newUser);
   }
 }
 
