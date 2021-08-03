@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import homeController from '../controllers/HomeController';
+import TokenController from '../controllers/TokenController';
 
 const routes = Router();
 
-routes.get('/', homeController.index);
+routes.post('/', TokenController.index);
 
 export default routes;
