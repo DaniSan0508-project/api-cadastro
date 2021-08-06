@@ -9,5 +9,5 @@ routes.get('/', userController.index);
 
 routes.post('/', userController.store);
 routes.put('/', loginRequired, userController.update);
-routes.delete('/:id', loginRequired, userController.delete);
+routes.delete('/', loginRequired, userController.delete);
 export default routes;

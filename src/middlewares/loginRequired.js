@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
-export default (request, response, next) => {
+export default async (request, response, next) => {
   const { authorization } = request.headers;
 
   if (!authorization) {
@@ -13,6 +14,18 @@ export default (request, response, next) => {
   try {
     const dados = jwt.verify(token, process.env.TOKEN_SECRET);
     const { id, email } = dados;
+
+    const user = await User.findOne({
+      id,
+      email,
+    });
+
+    if (!user) {
+      return response.status(400).json({
+        errors: ['Invalid User'],
+      });
+    }
+
     request.userId = id;
     request.userEmail = email;
     return next();
