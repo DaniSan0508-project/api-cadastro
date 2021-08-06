@@ -4,9 +4,10 @@ import loginRequired from '../middlewares/loginRequired';
 
 const routes = Router();
 
-routes.post('/', userController.store);
-routes.get('/', loginRequired, userController.index);
 routes.get('/:id', userController.show);
-routes.put('/:id', userController.update);
-routes.delete('/:id', userController.delete);
+routes.get('/', userController.index);
+
+routes.post('/', userController.store);
+routes.put('/:id', loginRequired, userController.update);
+routes.delete('/:id', loginRequired, userController.delete);
 export default routes;

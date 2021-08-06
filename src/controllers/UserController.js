@@ -20,7 +20,7 @@ class UserController {
 
   async index(request, response) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ['id', 'nome', 'email'] });
       return response.json(users);
     } catch (e) {
       return response.json(null);
@@ -28,9 +28,21 @@ class UserController {
   }
 
   async show(request, response) {
-    const { id } = request.params;
-    const user = await User.findByPk(id);
-    return response.json(user);
+    try {
+      const { id } = request.params;
+      const user = await User.findByPk(id);
+      if (!user) {
+        return response.status(401).json({
+          errors: ['User does not exist'],
+        });
+      }
+      const { nome, email } = user;
+      return response.json({ id, nome, email });
+    } catch (e) {
+      return response.status(400).json({
+        errors: e.error.map((err) => err.message),
+      });
+    }
   }
 
   async update(request, response) {
@@ -38,9 +50,6 @@ class UserController {
       const { id } = request.params;
       if (!id) {
         return response.status(400).json({
-          errors: [
-            'missing id',
-          ],
         });
       }
 
