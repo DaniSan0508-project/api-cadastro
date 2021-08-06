@@ -8,6 +8,6 @@ routes.get('/:id', userController.show);
 routes.get('/', userController.index);
 
 routes.post('/', userController.store);
-routes.put('/:id', loginRequired, userController.update);
+routes.put('/', loginRequired, userController.update);
 routes.delete('/:id', loginRequired, userController.delete);
 export default routes;

@@ -47,13 +47,7 @@ class UserController {
 
   async update(request, response) {
     try {
-      const { id } = request.params;
-      if (!id) {
-        return response.status(400).json({
-        });
-      }
-
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(request.userId);
 
       if (!user) {
         return response.status(400).json({

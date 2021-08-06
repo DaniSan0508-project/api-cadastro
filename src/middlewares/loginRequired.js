@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-export default (require, response, next) => {
-  const { authorization } = require.headers;
+export default (request, response, next) => {
+  const { authorization } = request.headers;
 
   if (!authorization) {
     return response.status(401).json({
@@ -13,9 +13,8 @@ export default (require, response, next) => {
   try {
     const dados = jwt.verify(token, process.env.TOKEN_SECRET);
     const { id, email } = dados;
-
-    require.userId = id;
-    require.userEmail = email;
+    request.userId = id;
+    request.userEmail = email;
     return next();
   } catch (e) {
     return response.status(401).json({
