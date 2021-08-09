@@ -15,9 +15,12 @@ export default async (request, response, next) => {
     const dados = jwt.verify(token, process.env.TOKEN_SECRET);
     const { id, email } = dados;
 
+    // verificando se existe usuário na base de dados
     const user = await User.findOne({
-      id,
-      email,
+      where: {
+        id,
+        email,
+      },
     });
 
     if (!user) {
