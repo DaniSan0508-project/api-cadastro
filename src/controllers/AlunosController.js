@@ -1,6 +1,9 @@
+import Aluno from '../models/Aluno';
+
 class AlunosController {
   async index(request, response) {
-    return response.json({ msg: 'teste' });
+    const alunos = await Aluno.findAll();
+    return response.json(alunos);
   }
 }
 
