@@ -34,7 +34,15 @@ class AlunosController {
 
   async store(request, response) {
     try {
-      const aluno = Aluno.create(request.body);
+      const { email } = request.body;
+      const alunoExiste = await Aluno.findOne({ where: { email } });
+      if (alunoExiste) {
+        return response.status(400).json({
+          errors: ['Student already exists'],
+        });
+      }
+
+      const aluno = await Aluno.create(request.body);
       if (!aluno) {
         return response.status(400).json({
           errors: ['Invalid Aluno'],
@@ -43,7 +51,7 @@ class AlunosController {
       return response.json(aluno);
     } catch (e) {
       return response.status(400).json({
-        errors: e.errors.map(((err) => err.mensage)),
+        errors: e.errors.map((err) => err.mensage),
       });
     }
   }
