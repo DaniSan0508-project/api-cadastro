@@ -23,7 +23,7 @@ export default class Aluno extends Model {
         },
       },
       sobrenome: {
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
         defaultValue: '',
         validate: {
           len: {
@@ -33,7 +33,7 @@ export default class Aluno extends Model {
         },
       },
       idade: {
-        type: sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         defaultValue: '',
         validate: {
           isInt: {
@@ -42,7 +42,7 @@ export default class Aluno extends Model {
         },
       },
       peso: {
-        type: sequelize.FLOAT,
+        type: Sequelize.FLOAT,
         defaultValue: '',
         validate: {
           isFloat: {
@@ -51,7 +51,7 @@ export default class Aluno extends Model {
         },
       },
       altura: {
-        type: sequelize.FLOAT,
+        type: Sequelize.FLOAT,
         defaultValue: '',
         validate: {
           isFloat: {
