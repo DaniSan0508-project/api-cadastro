@@ -48,6 +48,31 @@ class AlunosController {
     }
   }
 
+  async update(request, response) {
+    try {
+      const { id } = request.params;
+      if (!id) {
+        return response.status(400).json({
+          errors: ['Invalid Id'],
+        });
+      }
+
+      const aluno = await Aluno.findByPk(id);
+
+      if (!aluno) {
+        return response.status(400).json({
+          errors: ['student not found'],
+        });
+      }
+      const alunoAtualizado = await aluno.update(request.body);
+      return response.json(alunoAtualizado);
+    } catch (e) {
+      return response.status(400).json({
+        errors: e.errors.map(((err) => err.mensage)),
+      });
+    }
+  }
+
   async delete(request, response) {
     try {
       const { id } = request.params;
