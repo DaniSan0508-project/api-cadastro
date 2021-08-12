@@ -3,11 +3,9 @@ module.exports = {
     await queryInterface.changeColumn('alunos', 'email', {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: false,
+      unique: true,
     });
   },
 
-  down: async () => {
-
-  },
+  down: () => {},
 };
