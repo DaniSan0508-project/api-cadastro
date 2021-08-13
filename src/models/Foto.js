@@ -17,7 +17,7 @@ export default class Foto extends Model {
         defaultValue: '',
         validate: {
           notEmpty: {
-            msg: 'field cannot be empty',
+            msg: 'field cannote be empty',
           },
         },
       },
