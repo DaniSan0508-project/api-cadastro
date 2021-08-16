@@ -7,7 +7,7 @@ const routes = Router();
 routes.get('/:id', userController.show);
 routes.get('/', userController.index);
 
-routes.post('/', userController.store);
+routes.post('/', loginRequired, userController.store);
 routes.put('/', loginRequired, userController.update);
 routes.delete('/', loginRequired, userController.delete);
 export default routes;
